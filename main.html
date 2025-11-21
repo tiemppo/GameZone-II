@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone II</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="blob-container">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+    
+    <header>
+        <div class="header-content">
+            <div class="logo">GAMEZONE II</div>
+            <div class="header-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                    <svg id="themeIcon" class="theme-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path id="moonIcon" style="display: none;" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+                        <g id="sunIcon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </g>
+                    </svg>
+                </button>
+                <div id="userInfo" class="user-info"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="nav-tabs" id="navTabs"></div>
+        
+        <!-- Games Section -->
+        <div id="gamesSection" class="section">
+            <h2>Games</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">🎯</div>
+                    <h3>Aim Trainer</h3>
+                    <p>Test and improve your aim with moving targets!</p>
+                    <button class="btn btn-primary" onclick="showGameAlert('Aim Trainer')">Play Now</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🧩</div>
+                    <h3>Memory Match</h3>
+                    <p>Classic memory card matching game. How fast can you match them all?</p>
+                    <button class="btn btn-primary" onclick="showGameAlert('Memory Match')">Play Now</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">⌨️</div>
+                    <h3>Type Racer</h3>
+                    <p>Race against time and improve your typing speed!</p>
+                    <button class="btn btn-primary" onclick="showGameAlert('Type Racer')">Play Now</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🧮</div>
+                    <h3>Math Blast</h3>
+                    <p>Solve math problems as fast as you can! Educational and fun.</p>
+                    <button class="btn btn-primary" onclick="showGameAlert('Math Blast')">Play Now</button>
+                </div>
+                <div class="game-card coming-soon">
+                    <div class="game-icon">🚀</div>
+                    <h3>Space Shooter</h3>
+                    <p>Classic arcade space shooter with waves of enemies!</p>
+                    <button class="btn btn-secondary" disabled>Coming Soon</button>
+                </div>
+                <div class="game-card coming-soon">
+                    <div class="game-icon">🏃</div>
+                    <h3>Endless Runner</h3>
+                    <p>Jump and dodge obstacles in this endless running game!</p>
+                    <button class="btn btn-secondary" disabled>Coming Soon</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div id="leaderboardSection" class="section">
+            <h2>Leaderboard</h2>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Level</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px;">No players yet. Be the first!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- School Portal Section -->
+        <div id="schoolPortalSection" class="section">
+            <h2>School Portal</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">📚</div>
+                    <h3>Skyward</h3>
+                    <p>Student Information System - Check grades, attendance, and schedule</p>
+                    <button class="btn btn-primary" onclick="window.open('https://www.q.wa-k12.net/lkwashSTS', '_blank')">Open Skyward</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">📅</div>
+                    <h3>Flexisched</h3>
+                    <p>Flexible scheduling system for managing your school day</p>
+                    <button class="btn btn-primary" onclick="window.open('https://evergreen.flexisched.net/login', '_blank')">Open Flexisched</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">📖</div>
+                    <h3>Classlink</h3>
+                    <p>Access all your school applications in one place</p>
+                    <button class="btn btn-primary" onclick="window.open('https://myapps.classlink.com/home', '_blank')">Open Classlink</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Section -->
+        <div id="homeSection" class="section">
+            <h2>Home</h2>
+            
+            <!-- Level and XP Section -->
+            <div class="games-grid" style="margin-bottom: 30px;">
+                <div class="game-card" style="grid-column: 1 / -1;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                        <div>
+                            <h3 style="color: var(--accent-primary); margin-bottom: 10px;">Level & XP</h3>
+                            <p style="font-size: 48px; font-weight: 900; color: var(--accent-primary); margin: 0;">Level <span id="userLevel">1</span></p>
+                            <p style="color: var(--text-secondary); margin-top: 5px;">XP: <span id="userXP">0</span> / <span id="userXPNeeded">100</span></p>
+                        </div>
+                        <div style="flex: 1; max-width: 400px;">
+                            <div style="background: var(--bg-primary); height: 20px; border-radius: 10px; overflow: hidden; border: 2px solid var(--border-color);">
+                                <div id="xpBar" style="background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary)); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Games Section -->
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: var(--accent-primary); margin-bottom: 15px;">Recent Games</h3>
+                <div id="recentGamesList" class="games-grid">
+                    <div class="game-card" style="text-align: center; padding: 40px;">
+                        <p style="color: var(--text-secondary);">No games played yet. Start playing to see your recent games here!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcements Section -->
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                    <h3 style="color: var(--accent-primary); margin: 0;">Announcements</h3>
+                    <div id="announcementsAdminControls" style="display: none;">
+                        <button class="btn btn-primary" onclick="showCreateAnnouncementModal()" style="font-size: 14px; padding: 8px 15px;">+ New Announcement</button>
+                    </div>
+                </div>
+                <div id="announcementsList"></div>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div id="chatSection" class="section">
+            <h2>Chat Rooms</h2>
+            <div class="chat-container">
+                <div class="chat-rooms">
+                    <h3 style="margin-bottom: 15px;">Rooms</h3>
+                    <div class="chat-room-item active" onclick="switchChatRoom('general')">
+                        # general
+                    </div>
+                    <div class="chat-room-item" onclick="switchChatRoom('gaming')">
+                        # gaming
+                    </div>
+                    <div class="chat-room-item" onclick="switchChatRoom('homework')">
+                        # homework-help
+                    </div>
+                    <div class="chat-room-item" onclick="switchChatRoom('offtopic')">
+                        # off-topic
+                    </div>
+                </div>
+                <div class="chat-messages">
+                    <div class="messages-list" id="messagesList">
+                        <div class="message">
+                            <div class="message-author">System</div>
+                            <div>Welcome to the chat! Be respectful and have fun.</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
+                        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div id="statisticsSection" class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                <h2 style="margin: 0;">Statistics</h2>
+                <div id="statisticsAdminControls" style="display: none;">
+                    <button class="btn btn-secondary" onclick="resetStatistics()" style="font-size: 14px; padding: 8px 15px;">Reset Statistics</button>
+                </div>
+            </div>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">📚</div>
+                    <h3>Most Popular Game</h3>
+                    <p id="mostPopularGame">Loading...</p>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">📅</div>
+                    <h3>Visits Today</h3>
+                    <p id="visitsToday" style="font-size: 32px; font-weight: 900; color: var(--accent-primary);">0</p>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">📈</div>
+                    <h3>Visits This Week</h3>
+                    <p id="visitsWeek" style="font-size: 32px; font-weight: 900; color: var(--accent-primary);">0</p>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🌍</div>
+                    <h3>All Time Visits</h3>
+                    <p id="visitsAllTime" style="font-size: 32px; font-weight: 900; color: var(--accent-primary);">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Section -->
+        <div id="adminSection" class="section">
+            <h2>Admin Panel</h2>
+            <div class="game-card">
+                <h3>User Management</h3>
+                <p>View and manage all registered users</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="loadAllUsers()">View All Users</button>
+                    <button class="btn btn-secondary" id="userModeBtn" onclick="toggleUserMode()">User Mode</button>
+                    <button class="btn btn-secondary" id="shutdownBtn" onclick="toggleShutdown()">Temp Shutdown</button>
+                </div>
+            </div>
+            <div id="usersList" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Maintenance Page -->
+    <div id="maintenancePage" class="section" style="display: none;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 40px;">
+            <h1 style="color: var(--accent-primary); font-size: 48px; margin-bottom: 20px;">GameZone is Not Available Right Now</h1>
+            <p style="color: var(--text-secondary); font-size: 20px; margin-bottom: 40px;">
+                Probably because some cool new feature is being added. In the meantime, you can play our top games:
+            </p>
+            <div id="topGamesMaintenance" class="games-grid" style="max-width: 600px; margin: 0 auto;"></div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <div id="loginError"></div>
+            <form onsubmit="login(event)">
+                <div class="form-group">
+                    <label>Email or Username</label>
+                    <input type="text" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Login</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="showForgotPassword()">Forgot Password?</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="hideModal('loginModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content">
+            <h2>Reset Password</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Enter your email address and we'll send you a link to reset your password.</p>
+            <div id="resetError"></div>
+            <div id="resetSuccess"></div>
+            <form onsubmit="sendPasswordReset(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="resetEmail" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Send Reset Link</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="hideModal('forgotPasswordModal'); showModal('loginModal');">Back to Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <h2>Register</h2>
+            <div id="registerError"></div>
+            <div id="registerSuccess"></div>
+            <form onsubmit="register(event)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="registerUsername" required minlength="3">
+                    <small style="color: var(--text-secondary);">Only letters, numbers, underscores and hyphens</small>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="registerEmail" required>
+                    <small style="color: var(--text-secondary);">Use your LWSD email (7 digits@lwsd.org)</small>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="registerPassword" required minlength="6">
+                    <small style="color: var(--text-secondary);">Minimum 6 characters</small>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Register</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="hideModal('registerModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div id="verifyModal" class="modal">
+        <div class="modal-content">
+            <h2>Verify Email</h2>
+            <div class="info">
+                <strong>Check your email!</strong> We've sent a verification link to your email address. Click the link in the email, then click "Check Verification Status" below.
+            </div>
+            <div id="verifyError"></div>
+            <form onsubmit="verifyEmail(event)">
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Check Verification Status</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="resendVerification()">Resend Verification Email</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="hideModal('verifyModal')">Later</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Dialog Modal -->
+    <div id="customDialog" class="dialog-modal">
+        <div class="dialog-content">
+            <h3 id="dialogTitle">Alert</h3>
+            <p id="dialogMessage"></p>
+            <div class="dialog-buttons" id="dialogButtons"></div>
+        </div>
+    </div>
+
+    <!-- Announcement Edit/Create Modal -->
+    <div id="announcementModal" class="modal">
+        <div class="modal-content">
+            <h2 id="announcementModalTitle">Create Announcement</h2>
+            <form onsubmit="saveAnnouncement(event)">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="announcementTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="announcementContent" required></textarea>
+                </div>
+                <input type="hidden" id="announcementId">
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">Save</button>
+                <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="hideModal('announcementModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Load Scripts -->
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
